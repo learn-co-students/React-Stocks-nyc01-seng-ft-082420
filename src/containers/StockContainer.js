@@ -3,9 +3,8 @@ import Stock from '../components/Stock'
 
 class StockContainer extends Component {
 
-  // render stocks and pass down props to stock card
   renderStock = () => {
-    return this.props.stonks.map(stonk => <Stock key={stonk.id} stonk={stonk} />)
+    return this.props.stonks.map(stonk => <Stock key={stonk.id} stonk={stonk} clickHandler ={this.props.clickHandler}/>)
   }
 
   render() {

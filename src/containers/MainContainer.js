@@ -18,26 +18,26 @@ class MainContainer extends Component {
       .catch(console.log)
   }
 
-  /* need to pass down API as props to stock card */
-
+  
   /*clickHandler for catching the info from the stock card in container*/
-  // clickHandler = () => {
-
-  // }
-
-  /* the individual stock must get passed down as props to Portfolio Container*/
-
-
-
-  render() {
-    return (
-      <div>
+  clickHandler = (stonk_obj) => {
+    // console.log(stonk_obj)
+    // need the stonk obj to be added to a new array
+      // which will be passed down as props to portfolio container
+  }
+    
+    /* the individual stock must get passed down as props to Portfolio Container*/
+    
+    render() {
+      return (
+        <div>
         <SearchBar/>
 
           <div className="row">
             <div className="col-8">
 
-              <StockContainer stonks={this.state.stocks}/>
+        /* need to pass down API as props to stock card */
+              <StockContainer stonks={this.state.stocks} clickHandler={this.clickHandler}/>
 
             </div>
             <div className="col-4">

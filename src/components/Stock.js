@@ -1,8 +1,13 @@
 import React from 'react'
 
-const Stock = (props) => (
+const Stock = props => {
 
-  <div>
+  function localClickHandler(){
+    props.clickHandler(props.stonk)
+  }
+
+  return (
+  <div onClick={localClickHandler} >
 
     <div className="card">
       <div className="card-body">
@@ -19,6 +24,7 @@ const Stock = (props) => (
 
 
   </div>
-);
+  )
+};
 
 export default Stock
