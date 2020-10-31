@@ -4,8 +4,8 @@ import Stock from '../components/Stock'
 class PortfolioContainer extends Component {
 
   renderStock = () => {
-    console.log("these are the props", this.props.stonks)
-    // return this.props.stonks.map(stonk => <Stock key={stonk.id} stonk={stonk} />)
+    // console.log("these are the props", this.props.stonks)
+    return this.props.stonks.map(stonk => <Stock key={stonk.id} stonk={stonk} />)
   }
 
   render() {
