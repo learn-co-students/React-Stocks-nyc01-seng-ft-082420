@@ -19,29 +19,20 @@ class MainContainer extends Component {
       .catch(console.log)
   }
   
-  /*clickHandler for catching the info from the stock card in container*/
+  /*clickHandler catches the info from the stock card in container*/
   clickHandler = (stonkObj) => {
-    // let currentStocks = [...this.state.stocks]
     this.setState((previousState) => ({
       portfolio: [...previousState.portfolio, stonkObj]
     }))
   }
 
 
-  // removeStockFromPortfolio = (obj) => {
-  //   let currentStocks = [...this.state.stocks]
-  //   // let myPortfolioStocks = currentStocks
-
-  //   let myPortfolioStocks = [...this.state.stocks, obj]
-  //   for (let i = 0; i < myPortfolioStocks.length; i++){
-  //     if (myPortfolioStocks[i] === obj){
-  //       myPortfolioStocks.splice(i, 1)
-  //     }
-  //   }
-  //   this.setState(() => ({
-  //     stocks: myPortfolioStocks
-  //   }))
-  // }
+  removeStockFromPortfolio = (stonkObj) => {
+    let deletePortfolioStonks = this.state.portfolio.filter(stonk => stonk.id !== stonkObj.id)
+    this.setState(() => ({
+      portfolio: [...deletePortfolioStonks]
+    }))
+  }
         
     render() {
       return (
@@ -56,7 +47,7 @@ class MainContainer extends Component {
             </div>
             <div className="col-4">
 
-              <PortfolioContainer stonks={this.state.portfolio} /*clickHandler={this.removeStockFromPortfolio} */ />
+              <PortfolioContainer stonks={this.state.portfolio} clickHandler={this.removeStockFromPortfolio} />
 
             </div>
           </div>

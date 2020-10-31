@@ -1,12 +1,10 @@
 import React from 'react'
 
-// const Stock = props => {
-
 class Stock extends React.Component {
 
   localClickHandler = () => {
     this.props.clickHandler(this.props.stonk)
-    console.log(this.props.stonk)
+    console.log("Stock id:", this.props.stonk.id)
   }
   render(){
 
