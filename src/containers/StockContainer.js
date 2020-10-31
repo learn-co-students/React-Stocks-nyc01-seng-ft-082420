@@ -14,7 +14,21 @@ class StockContainer extends Component {
   }
 
   renderStocks = () => {
-    return this.state.stocks.map( stock => <Stock key={stock.id} clickHandler={this.props.clickHandler} stock={stock}/>)
+    console.log(this.props.sort)
+    let stocks;
+    if (this.props.filter) {
+      stocks = this.state.stocks.filter( stock => stock.type === this.props.filter)
+    } else {
+      stocks = this.state.stocks
+    }
+    if (this.props.sort) {
+      if (this.props.sort === "Alphabetically") {
+        stocks = stocks.sort((a, b) => a.name.localeCompare(b.name))
+      } else {
+        stocks = stocks.sort((a,b) => a.price - b.price)
+      }
+    }
+    return stocks.map( stock => <Stock key={stock.id} clickHandler={this.props.clickHandler} stock={stock}/>)
   }
 
   render() {
