@@ -8,6 +8,7 @@ class MainContainer extends Component {
   state = {
     api: [],
     portfolio: [],
+    masterApi: [],
     sort: "",
     filtered: ""
   }
@@ -15,7 +16,10 @@ class MainContainer extends Component {
   componentDidMount() {
     fetch('http://localhost:3000/stocks')
     .then(resp => resp.json())
-    .then(stocks => this.setState({ api: stocks }))
+    .then(stocks => this.setState({ 
+      api: stocks,
+      masterApi: stocks 
+    }))
   }
 
   stockClickHandler = (stockObj) => {
@@ -31,12 +35,17 @@ class MainContainer extends Component {
   sortBy = (e) => {
     if(e.target.value === 'Alphabetically'){
       let sortAlpha = this.state.api.sort((a,b) => a.name > b.name ? 1 : -1)
-      this.setState(() => ({ api: sortAlpha }))
-      this.setState(() => ({ sort: 'Alphabetically'}))
+      this.setState(() => ({ 
+        api: sortAlpha,
+        sort: 'Alphabetically' 
+      }))
     } else if (e.target.value === 'Price'){
       let sortPrice = this.state.api.sort((a,b) => a.price > b.price ? 1 : -1)
-      this.setState(() => ({ api: sortPrice }))
-      this.setState(() => ({ sort: 'Price' }))
+      this.setState(() => ({ 
+        api: sortPrice,
+        sort: 'Price'
+      }))
+      
     }
   }
 
@@ -44,12 +53,15 @@ class MainContainer extends Component {
 
     let filterThing = e.target.value
     
-    let filterArray = this.state.api.filter(stock => stock.type.includes(filterThing))
-    this.setState(previousState => ({
+    let filterArray = this.state.masterApi.filter(stock => stock.type.includes(filterThing))
+    
+    this.setState(() => ({
+      
       api: filterArray,
       filter: filterThing
     }))
     
+
   }
 
   render() {
