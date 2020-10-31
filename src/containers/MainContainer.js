@@ -19,13 +19,11 @@ class MainContainer extends Component {
       .catch(console.log)
   }
   
-  /*clickHandler catches the info from the stock card in container*/
   clickHandler = (stonkObj) => {
     this.setState((previousState) => ({
       portfolio: [...previousState.portfolio, stonkObj]
     }))
   }
-
 
   removeStockFromPortfolio = (stonkObj) => {
     let deletePortfolioStonks = this.state.portfolio.filter(stonk => stonk.id !== stonkObj.id)
