@@ -22,8 +22,8 @@ class MainContainer extends Component {
   /*clickHandler for catching the info from the stock card in container*/
   clickHandler = (stonkObj) => {
     // let currentStocks = [...this.state.stocks]
-    this.setState(() => ({
-      portfolio: [...stonkObj]
+    this.setState((previousState) => ({
+      portfolio: [...previousState.portfolio, stonkObj]
     }))
   }
 
