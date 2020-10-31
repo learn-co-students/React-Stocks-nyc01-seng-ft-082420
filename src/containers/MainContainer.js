@@ -5,6 +5,15 @@ import SearchBar from '../components/SearchBar'
 
 class MainContainer extends Component {
 
+  state = {
+    myPort: []
+  }
+
+  clickHandler = (stock) => {
+    console.log(stock)
+    this.setState((prev) => {[stock, ...prev.myPort]})
+  }
+
   render() {
     return (
       <div>
@@ -13,7 +22,7 @@ class MainContainer extends Component {
           <div className="row">
             <div className="col-8">
 
-              <StockContainer/>
+              <StockContainer clickHandler={this.clickHandler}/>
 
             </div>
             <div className="col-4">
