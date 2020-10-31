@@ -6,38 +6,42 @@ import SearchBar from '../components/SearchBar'
 class MainContainer extends Component {
 
   state ={
-    stocks: []
+    stocks: [],
+    portfolio: []
   }
 
   componentDidMount(){
     fetch("http://localhost:3000/stocks")
       .then(resp => resp.json())
-      .then(stocks => this.setState({stocks: stocks}))
+      .then(stocks => this.setState({
+        stocks: stocks
+      }))
       .catch(console.log)
   }
   
   /*clickHandler for catching the info from the stock card in container*/
-  clickHandler = (id) => {
-    let currentStocks = [...this.state.stocks]
-    // find the duplicate
-    let myPortfolioStocks = currentStocks.find(stonk => stonk.id === id)
+  clickHandler = (stonkObj) => {
+    // let currentStocks = [...this.state.stocks]
     this.setState(() => ({
-      stocks: currentStocks
+      portfolio: [...stonkObj]
     }))
   }
 
-  filterStocks = () => {
-    // console.log(this.state.stocks)
-    return this.state.stocks.filter(stonk => stonk.id)
-  }
 
-  removeStockFromPortfolio = (id) => {
-    let currentStocks = [...this.state.stocks]
-    let myPortfolioStocks = currentStocks.find(stonk => stonk.id === id)
-    this.setState(() => ({
-      stocks: currentStocks
-    }))
-  }
+  // removeStockFromPortfolio = (obj) => {
+  //   let currentStocks = [...this.state.stocks]
+  //   // let myPortfolioStocks = currentStocks
+
+  //   let myPortfolioStocks = [...this.state.stocks, obj]
+  //   for (let i = 0; i < myPortfolioStocks.length; i++){
+  //     if (myPortfolioStocks[i] === obj){
+  //       myPortfolioStocks.splice(i, 1)
+  //     }
+  //   }
+  //   this.setState(() => ({
+  //     stocks: myPortfolioStocks
+  //   }))
+  // }
         
     render() {
       return (
@@ -52,7 +56,7 @@ class MainContainer extends Component {
             </div>
             <div className="col-4">
 
-              <PortfolioContainer stonks={this.filterStocks()} clickHandler={this.removeStockFromPortfolio} />
+              <PortfolioContainer stonks={this.state.portfolio} /*clickHandler={this.removeStockFromPortfolio} */ />
 
             </div>
           </div>
