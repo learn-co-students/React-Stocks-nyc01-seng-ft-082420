@@ -2,9 +2,11 @@ import React from 'react';
 
 const Stock = (props) => {
 
-  
+  const localClick =(e) => {
+    return (props.clickHandler(props.stock))
+  }
   return (
-    <div onClick={props.clickHandler}>
+    <div onClick={localClick}>
 
       <div className="card">
         <div className="card-body">

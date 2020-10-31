@@ -10,8 +10,14 @@ class MainContainer extends Component {
   }
 
   clickHandler = (stock) => {
-    console.log(stock)
-    this.setState((prev) => {[stock, ...prev.myPort]})
+    this.setState((prev) => ({myPort: [stock, ...prev.myPort]}))
+  }
+
+  removeClickHandler = (stock) => {
+    const updatedStocks = [...this.state.myPort]
+    const index = updatedStocks.findIndex( stockk => stockk.id === stock.id) 
+    updatedStocks.splice(index, 1)
+    this.setState(()=> ({myPort: updatedStocks}))
   }
 
   render() {
@@ -27,7 +33,7 @@ class MainContainer extends Component {
             </div>
             <div className="col-4">
 
-              <PortfolioContainer/>
+              <PortfolioContainer clickHandler={this.removeClickHandler} stocks={this.state.myPort}/>
 
             </div>
           </div>
