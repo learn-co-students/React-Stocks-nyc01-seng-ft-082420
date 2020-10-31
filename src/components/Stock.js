@@ -4,7 +4,6 @@ class Stock extends React.Component {
 
   localClickHandler = () => {
     this.props.clickHandler(this.props.stonk)
-    console.log("Stock id:", this.props.stonk.id)
   }
   render(){
 

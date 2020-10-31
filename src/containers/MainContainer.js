@@ -7,7 +7,8 @@ class MainContainer extends Component {
 
   state ={
     stocks: [],
-    portfolio: []
+    portfolio: [],
+    sortStocksByPrice: []
   }
 
   componentDidMount(){
@@ -31,11 +32,22 @@ class MainContainer extends Component {
       portfolio: [...deletePortfolioStonks]
     }))
   }
+
+  sortStocks = (e) => {
+    if (e.target.value === "Alphabetically"){
+      console.log("hey!")
+      // sort alphabetically by selecting the stock's name
+    } else if (e.target.value === "Price"){
+      let aStocks = [this.state.stocks].sort((a,b) => a-b)
+      this.setState(() => ({
+        sortStocksByPrice: [...aStocks]
+      }))
+  }}
         
     render() {
       return (
         <div>
-        <SearchBar/>
+        <SearchBar />
 
           <div className="row">
             <div className="col-8">
