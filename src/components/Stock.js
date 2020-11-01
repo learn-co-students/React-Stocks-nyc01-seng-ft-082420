@@ -20,6 +20,9 @@ class Stock extends React.Component {
               //ticker: stock price
               this.props.stonk.price
             }</p>
+            <p>
+              {this.props.stonk.type}
+            </p>
         </div>
       </div>
 

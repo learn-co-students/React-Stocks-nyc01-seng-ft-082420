@@ -8,14 +8,17 @@ class MainContainer extends Component {
   state ={
     stocks: [],
     portfolio: [],
-    sortStocksByPrice: []
+    sort: "",
+    filter: "",
+    different: []
   }
 
   componentDidMount(){
     fetch("http://localhost:3000/stocks")
       .then(resp => resp.json())
       .then(stocks => this.setState({
-        stocks: stocks
+        stocks: stocks,
+        different: stocks
       }))
       .catch(console.log)
   }
@@ -35,19 +38,34 @@ class MainContainer extends Component {
 
   sortStocks = (e) => {
     if (e.target.value === "Alphabetically"){
-      console.log("hey!")
-      // sort alphabetically by selecting the stock's name
-    } else if (e.target.value === "Price"){
-      let aStocks = [this.state.stocks].sort((a,b) => a-b)
+      let currentStocks = this.state.stocks.sort((a, b) => a.name > b.name ? 1 : -1)
       this.setState(() => ({
-        sortStocksByPrice: [...aStocks]
+        stocks: currentStocks,
+        sort: "Alphabetically"
+      }))
+    } else if (e.target.value === "Price"){
+      let currentStocks = this.state.stocks.sort((a,b) => a.price > b.price ? 1 : -1)
+      this.setState(() => ({
+        stocks: currentStocks,
+        sort: "Price"
       }))
   }}
+
+  filterStocks = (e) => {
+    let filterThing = e.target.value
+    let filterArray = this.state.different.filter(stonk => stonk.type.includes(filterThing))
+    this.setState(() => ({
+      stocks: filterArray,
+      filter: filterThing
+    }))
+  }
+
+
         
     render() {
       return (
         <div>
-        <SearchBar />
+        <SearchBar sortStocks={this.sortStocks} sort={this.state.sort} filter={this.state.filter} filterStocks={this.filterStocks}/>
 
           <div className="row">
             <div className="col-8">
