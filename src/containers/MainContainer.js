@@ -6,79 +6,73 @@ import SearchBar from '../components/SearchBar'
 class MainContainer extends Component {
 
   state = {
-    api: [],
+    stocks : [],
     portfolio: [],
-    masterApi: [],
-    sort: "",
-    filtered: ""
+    filter: 'All',
+    sort: ''
   }
 
   componentDidMount() {
     fetch('http://localhost:3000/stocks')
     .then(resp => resp.json())
-    .then(stocks => this.setState({ 
-      api: stocks,
-      masterApi: stocks 
-    }))
+    .then(stocks => {
+      this.setState(() => ({
+        stocks: stocks
+      }))
+    })
   }
 
-  stockClickHandler = (stockObj) => {
+  clickHandler = (stockObj) => {
     this.setState(previousState => 
       ({ portfolio: [...previousState.portfolio, stockObj] }))
   }
 
-  deletePortfolioStockClickHandler = (stockObj) => {
-    let deleteStock = this.state.portfolio.filter(stock => stock.id !== stockObj.id)
-    this.setState(() => ({portfolio: deleteStock}))
+  removeHandler = (portfolioObj) => {
+    let removedPortfolioStock = this.state.portfolio.filter(stock => stock.id !== portfolioObj.id)
+    this.setState(() => ({ portfolio: removedPortfolioStock }))
   }
 
   sortBy = (e) => {
-    if(e.target.value === 'Alphabetically'){
-      let sortAlpha = this.state.api.sort((a,b) => a.name > b.name ? 1 : -1)
-      this.setState(() => ({ 
-        api: sortAlpha,
-        sort: 'Alphabetically' 
-      }))
-    } else if (e.target.value === 'Price'){
-      let sortPrice = this.state.api.sort((a,b) => a.price > b.price ? 1 : -1)
-      this.setState(() => ({ 
-        api: sortPrice,
-        sort: 'Price'
-      }))
-      
-    }
+    let sorted = e.target.value
+    this.setState(() => ({ sort: sorted }))
   }
 
   filterBy = (e) => {
+    let filtered = e.target.value 
+    this.setState(() => ({ filter: filtered }))
+  }
 
-    let filterThing = e.target.value
-    
-    let filterArray = this.state.masterApi.filter(stock => stock.type.includes(filterThing))
-    
-    this.setState(() => ({
-      
-      api: filterArray,
-      filter: filterThing
-    }))
-    
 
+  displayStocksBy = () => {
+    let changedStocks = [...this.state.stocks]
+    if (this.state.filter !== "All") {
+      changedStocks = changedStocks.filter(stock => stock.type === this.state.filter)
+    }
+
+    if (this.state.sort === "Alphabetically") {
+      return changedStocks.sort((a,b) => a.name > b.name ? 1 : -1)
+    } else if (this.state.sort === "Price") {
+      return changedStocks.sort((a,b) => a.price > b.price ? 1 : -1)
+    }
+    return changedStocks
   }
 
   render() {
+    
     return (
       <div>
-        <SearchBar sortBy={this.sortBy} sort={this.state.sort} filter={this.state.filter} filterBy={this.filterBy}/>
+        <SearchBar sort={this.state.sort} sortBy={this.sortBy} filter={this.state.filter} filterBy={this.filterBy}/>
 
           <div className="row">
             <div className="col-8">
 
-              <StockContainer stocks={this.state.api} stockClickHandler={this.stockClickHandler}  />
-                
+              <StockContainer stocks={this.displayStocksBy()} clickHandler={this.clickHandler} removeHandler={this.removeHandler} />
+
             </div>
             <div className="col-4">
 
-              <PortfolioContainer stockClickHandler={this.stockClickHandler} portfolio={this.state.portfolio} deletePortfolioStockClickHandler={this.deletePortfolioStockClickHandler}/>
-            
+              <PortfolioContainer portfolio={this.state.portfolio} clickHandler={this.clickHandler} removeHandler={this.removeHandler}/>
+
             </div>
           </div>
       </div>
